@@ -8,12 +8,14 @@ class Stack:
                 
                 self.items.append(item)
                 self.count +=1
+                self.top +=1
         def pop(self):
                 if self.top==-1:
                         raise Exception,"Stack is empty"
                 else:
                         self.count -=1
-                        return items.pop()
+                        self.top -=1
+                        return self.items.pop()
         def count(self):
                 return self.count
                         

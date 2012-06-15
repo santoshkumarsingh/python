@@ -20,3 +20,5 @@ def fun_args(*args):
 
 fun_args(1,2,3,4)
 
+
+
