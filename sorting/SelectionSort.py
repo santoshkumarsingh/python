@@ -1,4 +1,4 @@
-'''his type of sorting is called "Selection Sort" because it works by
+'''This type of sorting is called "Selection Sort" because it works by
 repeatedly element. It works as follows: first find the smallest in
 the array and exchange it with the element in the first position,
 then find the second smallest element and exchange it with the element
