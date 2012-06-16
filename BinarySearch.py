@@ -26,3 +26,6 @@ def binarySearch(list, item):
 
     # item was not in list
     return -1
+if __name__=="__main__":
+    list=[1,2,3,4,5,6]
+    print binarySearch(list,5)
