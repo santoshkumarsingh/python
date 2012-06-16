@@ -1,6 +1,7 @@
 def MergeSort(left, right, lt):
     """Assumes left and right are sorted lists.lt defines an ordering on the elements of the lists.Returns a new sorted(by lt) list containing the same elementsas (left + right) would contain."""
     result = []
+    
     i,j = 0, 0
     while i < len(left) and j < len(right):
         if lt(left[i], right[j]):
