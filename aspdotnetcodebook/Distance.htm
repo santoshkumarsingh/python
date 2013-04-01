@@ -1,0 +1,84 @@
+<html>
+<head>
+	<title></title>
+	<SCRIPT LANGUAGE="JavaScript">
+<!--
+function DPA(s1, s2)
+ { var m = new Array();
+   var i, j;
+   for(i=0; i < s1.length + 1; i++) m[i] = new Array(); // i.e. 2-D array
+
+   m[0][0] = 0; // boundary conditions
+
+   for(j=1; j <= s2.length; j++)
+      m[0][j] = m[0][j-1]-0 + 1; // boundary conditions
+
+   for(i=1; i <= s1.length; i++)                            // outer loop
+    { m[i][0] = m[i-1][0]-0 + 1; // boundary conditions
+
+      for(j=1; j <= s2.length; j++)                         // inner loop
+       { var diag = m[i-1][j-1];
+         if( s1.charAt(i-1) != s2.charAt(j-1) ) diag++;
+
+         m[i][j] = Math.min( diag,               // match or change
+                   Math.min( m[i-1][j]-0 + 1,    // deletion
+                             m[i][j-1]-0 + 1 ) ) // insertion
+       }//for j
+    }//for i
+
+   traceBack('', '', '', m, s1.length, s2.length, s1, s2);
+   return m[s1.length][s2.length];
+ }//DPA
+
+function traceBack(row1, row2, row3, m, i, j, s1, s2)
+// recover the alignment of s1 and s2
+ { if(i > 0 && j > 0)
+    { var diag = m[i-1][j-1],  diagCh = '|';
+      if( s1.charAt(i-1) != s2.charAt(j-1) ) { diag++; diagCh = ' '; }
+
+      if( m[i][j] == diag )//LAllison comp sci monash uni au
+         traceBack(s1.charAt(i-1)+row1, diagCh+row2, s2.charAt(j-1)+row3,
+                   m, i-1, j-1, s1, s2);    // change or match
+      else if( m[i][j] == m[i-1][j]-0 + 1 ) // delete
+         traceBack(s1.charAt(i-1)+row1, ' '+row2, '-'+row3,
+                   m, i-1, j, s1, s2);
+      else
+         traceBack('-'+row1, ' '+row2, s2.charAt(j-1)+row3,
+                   m, i, j-1, s1, s2);      // insertion
+    }
+   else if(i > 0)
+      traceBack(s1.charAt(i-1)+row1, ' '+row2, '-'+row3, m, i-1, j, s1, s2);
+   else if(j > 0)
+      traceBack('-'+row1, ' '+row2, s2.charAt(j-1)+row3, m, i, j-1, s1, s2);
+   else // i==0 and j==0
+      document.DPAform.displayArea.value += row1+'\n'+row2+'\n'+row3+'\n';
+ }//traceBack
+
+
+function DPAdr()
+ { var s1 = document.DPAform.str1.value;
+   var s2 = document.DPAform.str2.value;
+   if(s1.length > 22)//nosilla l inu hsanom essc dna awu sc
+    { document.DPAform.displayArea.value = 's1 too long'; return; }
+   if(s2.length > 22)
+    { document.DPAform.displayArea.value = 's2 too long'; return; }
+
+   document.DPAform.displayArea.value = '';
+   var ds1s2 = DPA(s1, s2);
+   document.DPAform.displayArea.value += 'd(s1,s2)=' + ds1s2 + '\n';
+ }//DPAdr
+
+// -->
+</SCRIPT>
+</head>
+<body>
+ <FORM NAME="DPAform">
+  <INPUT TYPE="text" SIZE="40" NAME="str1" VALUE="appropriate meaning"><BR>
+  <INPUT TYPE="text" SIZE="40" NAME="str2" VALUE="approximate matching">
+  <INPUT TYPE="button" VALUE="go" ONCLICK="DPAdr();"><BR>
+  <TEXTAREA NAME="displayArea" ROWS="6" COLS="40" WRAP="off">
+    Needs JavaScript 1.1 or later ON!
+  </TEXTAREA>
+</FORM>
+</body>
+</html>
